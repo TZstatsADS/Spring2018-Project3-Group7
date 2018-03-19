@@ -18,7 +18,7 @@ Term: Spring 2018
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
  
  + **Chandak, Anshuma：**
- + **Huang, Yuexuan：**  
+ + **Huang, Yuexuan：**  Builded baseline model(GBM). Applied GBM with SIFT, HOG, Gray, PCA features. Modified the feature.R, train.R, test.R and cross_validation.R files.
  + **Li, Xinrou：**
  + **Liu, Fangbing：** Created HOG feature, SVM Linear model and SVM with RBF Kernel model. Also modified the feature.R, train.R, test.R and cross_validation.R files. And organized the GitHub folders.
  + **Yan, Xiuruo：** 
