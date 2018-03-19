@@ -2,11 +2,26 @@
 ### Fit the classification model with testing data ###
 ######################################################
 
-### Author: Yuting Ma
-### Project 3
-### ADS Spring 2016
+### Author: Fangbing Liu, Yuexuan Huang
+### ADS Project 3 Spring 2018
 
-test <- function(fit_train, dat_test){
+## Baseline Model(GBM)
+gbm_test <- function(model_fit, data){
+  
+  pred <- predict(model_fit, newdata=data, n.trees=model_fit$n.trees, type="response")
+  
+  pred <- data.frame(pred[,,1])
+  
+  colnames(pred) <- c('0','1','2')
+  
+  pred_label <- apply(pred,1,function(x){return(which.max(x)-1)})
+  
+  return(pred_label)
+}
+
+
+## SVM with RBF Kernel Model
+test.svm.rbf <- function(fit_train, dat_test){
   
   ### Fit the classfication model with testing data
   
@@ -16,11 +31,10 @@ test <- function(fit_train, dat_test){
   ### Output: training model specification
   
   ### load libraries
-  library("gbm")
+  library(e1071)
   
-  pred <- predict(fit_train$fit, newdata=dat_test, 
-                  n.trees=fit_train$iter, type="response")
+  pred_svm_rbf <- predict(fit_train, newdata = dat_test)
   
-  return(as.numeric(pred> 0.5))
+  return(pred_svm_rbf)
 }
 

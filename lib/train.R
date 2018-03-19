@@ -2,14 +2,39 @@
 ### Train a classification model with training images ###
 #########################################################
 
-### Author: Yuting Ma
-### Project 3
-### ADS Spring 2016
+### Author: Fangbing Liu, Yuexuan Huang
+### ADS Project 3 Spring 2018
 
-
-train <- function(dat_train, label_train, par=NULL){
+## Baseline Model(GBM)
+gbm_train <- function(data, label, n.trees, n.shrinkage=0.1, run.cv=F){
+  library('gbm')
   
-  ### Train a Gradient Boosting Model (GBM) using processed features from training images
+  train_df <- data
+  train_df$label <- label
+  if(run.cv){
+    best.n.trees = cv.f(trees = 500, K = 10, train_df = train_df)
+    best.shrinkage <- n.shrinkage
+    
+  } 
+  else{
+    best.n.trees <- n.trees
+    best.shrinkage <- n.shrinkage
+    
+  }
+  cat('best number of tress is: ',best.n.trees)
+  
+  best_gbm_fit <- gbm(label~ ., data = train_df, interaction.depth = 1, 
+                      distribution="multinomial", n.trees = best.n.trees, 
+                      shrinkage = best.shrinkage)
+  return(best_gbm_fit)
+  
+}
+
+
+## SVM with RBF Kernel Model
+train.svm.rbf <- function(dat_train, label_train, par=NULL){
+  
+  ### Train a SVM classifier with RBF kernel using features of training images
   
   ### Input: 
   ###  -  processed features from images 
@@ -17,21 +42,21 @@ train <- function(dat_train, label_train, par=NULL){
   ### Output: training model specification
   
   ### load libraries
-  library("gbm")
+  library(e1071)
   
   ### Train with gradient boosting model
   if(is.null(par)){
-    depth <- 3
+    cost <- 150
+    gamma <- 10
   } else {
-    depth <- par$depth
+    cost <- par$cost
+    gamma <- par$gamma
   }
-  fit_gbm <- gbm.fit(x=dat_train, y=label_train,
-                     n.trees=2000,
-                     distribution="bernoulli",
-                     interaction.depth=depth, 
-                     bag.fraction = 0.5,
-                     verbose=FALSE)
-  best_iter <- gbm.perf(fit_gbm, method="OOB", plot.it = FALSE)
+  fit_svm_rbf <- svm(y~., data = dat_train,
+                     kernel = "radial", 
+                     cost = cost,
+                     gamma = gamma, 
+                     scale = F)
 
-  return(list(fit=fit_gbm, iter=best_iter))
+  return(fit_svm_rbf)
 }
