@@ -20,7 +20,7 @@ Term: Spring 2018
  + **Chandak, Anshuma：**
  + **Huang, Yuexuan：**  
  + **Li, Xinrou：**
- + **Liu, Fangbing：**Created HOG feature, SVM Linear model and SVM with RBF Kernel model. Also modified the feature.R, train.R, test.R and cross_validation.R files. And organized the GitHub folders.
+ + **Liu, Fangbing：** Created HOG feature, SVM Linear model and SVM with RBF Kernel model. Also modified the feature.R, train.R, test.R and cross_validation.R files. And organized the GitHub folders.
  + **Yan, Xiuruo：** 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
