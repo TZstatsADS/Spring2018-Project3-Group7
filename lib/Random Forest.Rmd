@@ -1,0 +1,176 @@
+---
+title: "Main"
+author: "Xinrou Li; xl2685"
+date: "March 16, 2018"
+output: pdf_document
+---
+
+```{r, warning = FALSE}
+library(randomForest)
+library(e1071)
+```
+
+```{r}
+set.seed(1)
+
+train.RF <- function(x_train, y_train, num_tree){
+  train.model.RF <- randomForest(x_train, y_train, ntree = num_tree)
+}
+
+```
+
+```{r}
+### SIFT feature###
+# load data
+X <- read.csv("../data/train/SIFT_train.csv", header = FALSE)[,-1]
+y <- read.csv("../data/train/label_train.csv")[,3]
+y <- as.factor(y)
+index <- sample(1:nrow(X), 0.75*nrow(X), replace=FALSE)
+X.train <- X[index,]
+X.test  <- X[-index,]
+y.train <- y[index]
+y.test  <- y[-index]
+
+# tune parameters and tune control
+# par.list = list(ntree = c(10, 20, 30, 40, 50, 60, 70))
+par.list = list(ntree = c(50, 100, 150, 200, 250, 300, 350))
+k = tune.control(cross = 5)
+
+# tune svm with different ntree using the one-versus-one approach
+tune.out <- tune(randomForest, train.x = X.train, train.y = y.train, 
+                 ranges = par.list, tunecontrol = k)
+
+tune.out$best.parameters 
+tune.out$best.performance 
+performances <- tune.out$performances
+# save(tune.out, file="../output/SIFT_fit_train_RF.RData")
+
+# train the best model on the whole training set
+best_model_SIFT_rf <- tune.out$best.model 
+best_model_SIFT_rf 
+tm_train <- system.time(train.RF(X.train, y.train, tune.out$best.parameters$ntree))
+cat("Time for training model = ", tm_train[3], "s \n")  
+tm_test <- system.time(pred <- predict(best_model_SIFT_rf, X.test)) 
+# save(pred, file = "../output/SIFT_pred_test_RF.RData")
+error <- mean(pred != y.test) 
+cat("Time for testing model = ", tm_test[3], "s \n") 
+cat("Random Forest with SIFT Accuracy = ", 1-error) 
+
+
+```
+
+```{r}
+### SIFT + PCA feature###
+# load data
+X <- read.csv("../data/train/SIFT_pca.csv")[,-1]
+y <- read.csv("../data/train/label_train.csv")[,3]
+y <- as.factor(y)
+index <- sample(1:nrow(X), 0.75*nrow(X), replace=FALSE)
+X.train <- X[index,]
+X.test  <- X[-index,]
+y.train <- y[index]
+y.test  <- y[-index]
+
+# tune parameters and tune control
+par.list = list(ntree = c(10, 20, 30, 40, 50, 60, 70))
+# par.list = list(ntree = c(50, 100, 150, 200, 250, 300, 350))
+k = tune.control(cross = 5)
+
+# tune Random Forest with different ntree using the one-versus-one approach
+tune.out <- tune(randomForest, train.x = X.train, train.y = y.train, 
+                 ranges = par.list, tunecontrol = k)
+
+tune.out$best.parameters 
+tune.out$best.performance 
+performances <- tune.out$performances
+# save(tune.out, file="../output/SIFT_PCA_fit_train_RF.RData")
+
+# train the best model on the whole training set
+best_model_SIFT_PCA_rf <- tune.out$best.model 
+best_model_SIFT_PCA_rf 
+tm_train <- system.time(train.RF(X.train, y.train, tune.out$best.parameters$ntree))
+cat("Time for training model = ", tm_train[3], "s \n")  
+tm_test <- system.time(pred <- predict(best_model_SIFT_PCA_rf, X.test)) 
+# save(pred, file = "../output/SIFT_PCA_pred_test_RF.RData")
+error <- mean(pred != y.test) 
+cat("Time for testing model = ", tm_test[3], "s \n") 
+cat("Random Forest with SIFT+PCA Accuracy = ", 1-error) 
+```
+
+```{r}
+### HOG feature###
+# load data
+X <- read.csv("../data/train/hog_feature.csv")[,-1]
+y <- read.csv("../data/train/label_train.csv")[,3]
+y <- as.factor(y)
+index <- sample(1:nrow(X), 0.75*nrow(X), replace=FALSE)
+X.train <- X[index,]
+X.test  <- X[-index,]
+y.train <- y[index]
+y.test  <- y[-index]
+
+# tune parameters and tune control
+# par.list = list(ntree = c(10, 20, 30, 40, 50, 60, 70))
+par.list = list(ntree = c(50, 100, 150, 200, 250, 300, 350))
+# par.list = list(ntree = c(190, 210, 230, 250, 270, 290, 310))
+k = tune.control(cross = 5)
+
+# tune Random Forest with different ntree using the one-versus-one approach
+tune.out <- tune(randomForest, train.x = X.train, train.y = y.train, 
+                 ranges = par.list, tunecontrol = k)
+
+tune.out$best.parameters 
+tune.out$best.performance 
+performances <- tune.out$performances
+# save(tune.out, file="../output/HOG_fit_train_RF_rbf.RData")
+
+# train the best model on the whole training set
+best_model_HOG_rf <- tune.out$best.model 
+best_model_HOG_rf 
+tm_train <- system.time(train.RF(X.train, y.train, tune.out$best.parameters$ntree))
+cat("Time for training model = ", tm_train[3], "s \n")  
+tm_test <- system.time(pred <- predict(best_model_HOG_rf, X.test)) 
+# save(pred, file = "../output/HOG_pred_test_RF.RData")
+error <- mean(pred != y.test) 
+cat("Time for testing model = ", tm_test[3], "s \n") 
+cat("Random Forest with HOG Accuracy = ", 1-error) 
+```
+
+```{r}
+### GRAY feature###
+# load data
+X <- read.csv("../data/train/gray_features.csv")[,-(1:2)]
+y <- read.csv("../data/train/label_train.csv")[,3]
+y <- as.factor(y)
+index <- sample(1:nrow(X), 0.75*nrow(X), replace=FALSE)
+X.train <- X[index,]
+X.test  <- X[-index,]
+y.train <- y[index]
+y.test  <- y[-index]
+
+# tune parameters and tune control
+par.list = list(ntree = c(10, 20, 30, 40, 50, 60, 70))
+# par.list = list(ntree = c(50, 100, 150, 200, 250, 300, 350))
+k = tune.control(cross = 5)
+
+# tune Random Forest with multiple classes using the one-versus-one approach
+tune.out <- tune(randomForest, train.x = X.train, train.y = y.train, 
+                 ranges = par.list, tunecontrol = k)
+
+tune.out$best.parameters
+tune.out$best.performance 
+performances <- tune.out$performances
+# save(tune.out, file="../output/GRAY_fit_train_RF.RData")
+
+# train the best model on the whole training set
+best_model_GRAY_rf <- tune.out$best.model 
+best_model_GRAY_rf
+tm_train <- system.time(train.RF(X.train, y.train, tune.out$best.parameters$ntree))
+cat("Time for training model = ", tm_train[3], "s \n")  
+tm_test <- system.time(pred <- predict(best_model_GRAY_rf, X.test)) 
+# save(pred, file = "../output/GRAY_pred_test_RF.RData")
+error <- mean(pred != y.test) 
+cat("Time for testing model = ", tm_test[3], "s \n") 
+cat("Random Forest with GRAY Accuracy = ", 1-error) 
+```
+
