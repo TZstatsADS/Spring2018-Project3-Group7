@@ -99,7 +99,7 @@ tm_gbm_predict[3]
 
 ###### GRAY ######
 ########## Apply GBM on GRAY ##########
-gray_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/data/gray_features.csv",as.is = T)[,-c(1:2)]
+gray_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/gray_features.csv",as.is = T)[,-c(1:2)]
 ######### set 70% sift_train_data as training data #############
 set.seed(3)
 train_index <- sort(sample(1:length(label_train),0.7*length(label_train)))
@@ -122,7 +122,7 @@ tm_gbm_predict[3]
 
 ###### PCA ######
 ########## Apply GBM on PCA ##########
-pca_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/data/sift_pca.csv",as.is = T)[,-1]
+pca_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/sift_pca.csv",as.is = T)[,-1]
 ######### set 70% sift_train_data as training data #############
 set.seed(4)
 train_index <- sort(sample(1:length(label_train),0.7*length(label_train)))
@@ -135,10 +135,10 @@ tm_gbm_train <- system.time(gbm_pca_fit_subset <- gbm_train(train_df4,train_df4$
 tm_gbm_predict <- system.time(pred_label4 <- gbm_test(gbm_pca_fit_subset,test_df4))
 
 mean(test_df4$label == pred_label4) 
-## 0.6577778
+## 0.7233333
 tm_gbm_train[3]
-## 0.365
+## 3.464
 tm_gbm_predict[3]
-## 0.02
+## 0.028
 
 
