@@ -135,10 +135,10 @@ tm_gbm_train <- system.time(gbm_pca_fit_subset <- gbm_train(train_df4,train_df4$
 tm_gbm_predict <- system.time(pred_label4 <- gbm_test(gbm_pca_fit_subset,test_df4))
 
 mean(test_df4$label == pred_label4) 
-## 0.6577778
+## 0.7233333
 tm_gbm_train[3]
-## 0.365
+## 3.464
 tm_gbm_predict[3]
-## 0.02
+## 0.028
 
 
