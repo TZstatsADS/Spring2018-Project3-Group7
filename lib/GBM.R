@@ -1,3 +1,6 @@
+### Author: Yuexuan Huang
+### ADS Project 3 Spring 2018
+
 
 gbm_train <- function(data, label, n.trees, n.shrinkage=0.1, run.cv=F){
   library('gbm')
