@@ -8,7 +8,7 @@ gbm_train <- function(data, label, n.trees, n.shrinkage=0.1, run.cv=F){
   train_df <- data
   train_df$label <- label
   if(run.cv){
-    best.n.trees = cv.f(trees = 500, K = 10, train_df = train_df)
+    best.n.trees = cv.gbm(trees = 500, K = 10, train_df = train_df)
     best.shrinkage <- n.shrinkage
     
   } 
