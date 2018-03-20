@@ -64,8 +64,11 @@ test_df <- data.frame(sift_train[-train_index,])
 test_df$label <- label_train[-train_index]
 
 tm_gbm_train <- system.time(gbm_sift_fit_subset <- gbm_train(train_df,train_df$label, n.trees=482, run.cv = F))
+train_label <- gbm_test(gbm_sift_fit_subset,train_df)
 tm_gbm_predict <- system.time(pred_label <- gbm_test(gbm_sift_fit_subset,test_df))
 
+mean(train_df$label == train_label) 
+## 0.9780952
 mean(test_df$label == pred_label) 
 ## 0.7111111
 tm_gbm_train[3]
@@ -86,8 +89,11 @@ test_df2 <- data.frame(hog_train[-train_index,])
 test_df2$label <- label_train[-train_index]
 
 tm_gbm_train <- system.time(gbm_hog_fit_subset <- gbm_train(train_df2,train_df2$label, n.trees=499, run.cv = F))
+train_label2 <- gbm_test(gbm_hog_fit_subset,train_df2)
 tm_gbm_predict <- system.time(pred_label2 <- gbm_test(gbm_hog_fit_subset,test_df2))
 
+mean(train_df2$label == train_label2) 
+## 0.8895238
 mean(test_df2$label == pred_label2) 
 ## 0.7477778
 tm_gbm_train[3]
@@ -109,8 +115,11 @@ test_df3 <- data.frame(gray_train[-train_index,])
 test_df3$label <- label_train[-train_index]
 
 tm_gbm_train <- system.time(gbm_gray_fit_subset <- gbm_train(train_df3,train_df3$label, n.trees=132, run.cv = F))
+train_label3 <- gbm_test(gbm_gray_fit_subset,train_df3)
 tm_gbm_predict <- system.time(pred_label3 <- gbm_test(gbm_gray_fit_subset,test_df3))
 
+mean(train_df3$label == train_label3) 
+## 0.67
 mean(test_df3$label == pred_label3) 
 ## 0.5444444
 tm_gbm_train[3]
@@ -132,8 +141,11 @@ test_df4 <- data.frame(pca_train[-train_index,])
 test_df4$label <- label_train[-train_index]
 
 tm_gbm_train <- system.time(gbm_pca_fit_subset <- gbm_train(train_df4,train_df4$label, n.trees=182, run.cv = F))
+train_label4 <- gbm_test(gbm_pca_fit_subset,train_df4)
 tm_gbm_predict <- system.time(pred_label4 <- gbm_test(gbm_pca_fit_subset,test_df4))
 
+mean(train_df4$label == train_label4) 
+## 0.8219048
 mean(test_df4$label == pred_label4) 
 ## 0.7233333
 tm_gbm_train[3]
@@ -153,12 +165,15 @@ train_df5$label <- label_train[train_index]
 test_df5 <- data.frame(color_train[-train_index,])
 test_df5$label <- label_train[-train_index]
 
-tm_gbm_train <- system.time(gbm_pca_fit_subset <- gbm_train(train_df5,train_df5$label, n.trees=369, run.cv = F))
-tm_gbm_predict <- system.time(pred_label5 <- gbm_test(gbm_pca_fit_subset,test_df5))
+tm_gbm_train <- system.time(gbm_color_fit_subset <- gbm_train(train_df5,train_df5$label, n.trees=369, run.cv = F))
+train_label5 <- gbm_test(gbm_color_fit_subset,train_df5)
+tm_gbm_predict <- system.time(pred_label5 <- gbm_test(gbm_color_fit_subset,test_df5))
 
+mean(train_df5$label == train_label5) 
+## 0.97
 mean(test_df5$label == pred_label5) 
 ## 0.8566667
 tm_gbm_train[3]
-## 1198.194
+## 66.545
 tm_gbm_predict[3]
 ## 0.724
