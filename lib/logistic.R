@@ -13,11 +13,9 @@ train.lg <- function(dat_train, label_train, par = NULL){
   ### Output: training model specification
   
   ### combine the features and the labels together
-  #y<-label_train
   mydata<-cbind(dat_train,label_train)
   mydata$label_train<-factor(label_train)
-  #mydata$label_train<-relevel(mydata$label_train,ref="0")
-  
+ 
   ### train with multinomial logistic regression model
   if(is.null(par)){
     maxit <- 100
@@ -38,9 +36,6 @@ test.lg <- function(fit_train, dat_test){
   ###  - the fitted classification model using training data
   ###  -  processed features from testing images 
   ### Output: training model specification
-  
-  ### load libraries
-  library("nnet")
   
   pred <- predict(fit_train$fit, dat_test)
   
@@ -137,8 +132,6 @@ test.error #0.6426667
 1-test.error  #overfit
 
 ### Summarize Running Time
-#cat("Time for constructing training features=", tm_feature_train[1], "s \n")
-#cat("Time for constructing testing features=", tm_feature_test[1], "s \n")
 cat("Time for training model=", tm_train[1], "s \n") # 78.661 s
 cat("Time for making prediction=", tm_test[1], "s \n")  # 0.41s
 
@@ -239,11 +232,8 @@ tm_test <- system.time(pred_test <- test.lg(fit_train, test_data))
 test.error <- mean(pred_test != test_labels)
 test.error #0.00133
 1-test.error
-save(pred_test, file="../output/pred_test_Logistic_Gist.RData")
 
 ### Summarize Running Time
-#cat("Time for constructing training features=", tm_feature_train[1], "s \n")
-#cat("Time for constructing testing features=", tm_feature_test[1], "s \n")
 cat("Time for training model=", tm_train[1], "s \n") # 0.086s
 cat("Time for making prediction=", tm_test[1], "s \n")  # 0.005s
 
@@ -276,27 +266,27 @@ arrows(iter_values, err_cv[,1]-err_cv[,2],iter_values, err_cv[,1]+err_cv[,2],
 
 
 # Choose the best parameter value
-min(err_cv[,1])  # 0.03333333
+min(err_cv[,1])  # 0.16
 iter_best <- iter_values[which.min(err_cv[,1] + err_cv[,2])]
 par_best <- list(maxit=iter_best) 
-par_best # maxit=30 is the best
+par_best # maxit=25 is the best
 
 # train the model with the entire training set
 tm_train <- system.time(fit_train <- train.lg(train_data, train_labels, par_best))
 pred_train <- test.lg(fit_train, train_data)
 train.error <- mean(pred_train != train_labels)
-train.error #0.02666667
-1-train.error #0.9733333
+train.error #0.14
+1-train.error #0.86
 
 ### Make prediction 
 tm_test <- system.time(pred_test <- test.lg(fit_train, test_data))
 test.error <- mean(pred_test != test_labels)
-test.error #0.02266667
-1-test.error #0.9773333
+test.error #0.1746667
+1-test.error #0.8253333
 
 ### Summarize Running Time
-cat("Time for training model=", tm_train[1], "s \n") # 0.086s
-cat("Time for making prediction=", tm_test[1], "s \n")  # 0.005s
+cat("Time for training model=", tm_train[1], "s \n") # 0.292 s
+cat("Time for making prediction=", tm_test[1], "s \n")  # 0.006 s
 
 
 
@@ -328,30 +318,27 @@ arrows(iter_values, err_cv[,1]-err_cv[,2],iter_values, err_cv[,1]+err_cv[,2],
 
 
 # Choose the best parameter value
-min(err_cv[,1])  # 0.004888889
+min(err_cv[,1])  # 0.3044444
 iter_best <- iter_values[which.min(err_cv[,1] + err_cv[,2])]
-par_best <- list(maxit=iter_best) # maxit=27 is the best
-par_best
+par_best <- list(maxit=iter_best) 
+par_best # maxit=16 is the best
 
 # train the model with the entire training set
 tm_train <- system.time(fit_train <- train.lg(train_data, train_labels, par_best))
 pred_train <- test.lg(fit_train, train_data)
 train.error <- mean(pred_train != train_labels)
-train.error #0.004
+train.error #0
 1-train.error
 
 ### Make prediction 
 tm_test <- system.time(pred_test <- test.lg(fit_train, test_data))
 test.error <- mean(pred_test != test_labels)
-test.error #0.00133
-1-test.error
-save(pred_test, file="../output/pred_test_Logistic_Gist.RData")
+test.error #0.3066667
+1-test.error #0.6933333
 
 ### Summarize Running Time
-#cat("Time for constructing training features=", tm_feature_train[1], "s \n")
-#cat("Time for constructing testing features=", tm_feature_test[1], "s \n")
-cat("Time for training model=", tm_train[1], "s \n") # 0.086s
-cat("Time for making prediction=", tm_test[1], "s \n")  # 0.005s
+cat("Time for training model=", tm_train[1], "s \n") # 78.016 s
+cat("Time for making prediction=", tm_test[1], "s \n")  # 0.404 s
 
 
 
