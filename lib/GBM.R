@@ -26,7 +26,7 @@ gbm_train <- function(data, label, n.trees, n.shrinkage=0.1, run.cv=F){
   
 }
 
-cv.f <- function(trees, K, train_df){
+cv.gbm <- function(trees, K, train_df){
   
   gbmWithCrossValidation = gbm(label~ ., data = train_df, distribution = "multinomial", 
                                n.trees = trees, shrinkage = .1, cv.folds = 10, n.cores = 1)
@@ -142,3 +142,23 @@ tm_gbm_predict[3]
 ## 0.028
 
 
+###### COLOR ######
+########## Apply GBM on COLOR ##########
+color_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/color_features.csv",as.is = T)[,-1]
+######### set 70% sift_train_data as training data #############
+set.seed(5)
+train_index <- sort(sample(1:length(label_train),0.7*length(label_train)))
+train_df5 <- data.frame(color_train[train_index,])
+train_df5$label <- label_train[train_index]
+test_df5 <- data.frame(color_train[-train_index,])
+test_df5$label <- label_train[-train_index]
+
+tm_gbm_train <- system.time(gbm_pca_fit_subset <- gbm_train(train_df5,train_df5$label, n.trees=369, run.cv = F))
+tm_gbm_predict <- system.time(pred_label5 <- gbm_test(gbm_pca_fit_subset,test_df5))
+
+mean(test_df5$label == pred_label5) 
+## 0.8566667
+tm_gbm_train[3]
+## 1198.194
+tm_gbm_predict[3]
+## 0.724
