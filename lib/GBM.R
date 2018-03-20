@@ -2,7 +2,7 @@
 ### ADS Project 3 Spring 2018
 
 
-gbm_train <- function(data, label, n.trees, n.shrinkage=0.1, run.cv=F){
+gbm_train <- function(data, label, n.trees=250, n.shrinkage=0.1, run.cv=F){
   library('gbm')
   
   train_df <- data
@@ -26,7 +26,7 @@ gbm_train <- function(data, label, n.trees, n.shrinkage=0.1, run.cv=F){
   
 }
 
-cv.f <- function(trees, K, train_df){
+cv.gbm <- function(trees, K, train_df){
   
   gbmWithCrossValidation = gbm(label~ ., data = train_df, distribution = "multinomial", 
                                n.trees = trees, shrinkage = .1, cv.folds = 10, n.cores = 1)
@@ -64,8 +64,11 @@ test_df <- data.frame(sift_train[-train_index,])
 test_df$label <- label_train[-train_index]
 
 tm_gbm_train <- system.time(gbm_sift_fit_subset <- gbm_train(train_df,train_df$label, n.trees=482, run.cv = F))
+train_label <- gbm_test(gbm_sift_fit_subset,train_df)
 tm_gbm_predict <- system.time(pred_label <- gbm_test(gbm_sift_fit_subset,test_df))
 
+mean(train_df$label == train_label) 
+## 0.9780952
 mean(test_df$label == pred_label) 
 ## 0.7111111
 tm_gbm_train[3]
@@ -78,67 +81,96 @@ tm_gbm_predict[3]
 ########## Apply GBM on HOG ##########
 hog_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/hog_feature.csv",as.is = T)[,-1]
 ######### set 70% sift_train_data as training data #############
-set.seed(2)
-train_index <- sort(sample(1:length(label_train),0.7*length(label_train)))
+
 train_df2 <- data.frame(hog_train[train_index,])
 train_df2$label <- label_train[train_index]
 test_df2 <- data.frame(hog_train[-train_index,])
 test_df2$label <- label_train[-train_index]
 
-tm_gbm_train <- system.time(gbm_hog_fit_subset <- gbm_train(train_df2,train_df2$label, n.trees=499, run.cv = F))
+tm_gbm_train <- system.time(gbm_hog_fit_subset <- gbm_train(train_df2,train_df2$label, n.trees=463, run.cv = F))
+train_label2 <- gbm_test(gbm_hog_fit_subset,train_df2)
 tm_gbm_predict <- system.time(pred_label2 <- gbm_test(gbm_hog_fit_subset,test_df2))
 
+mean(train_df2$label == train_label2) 
+## 0.8861905
 mean(test_df2$label == pred_label2) 
-## 0.7477778
+## 0.76
 tm_gbm_train[3]
-## 3.447 
+## 2.978 
 tm_gbm_predict[3]
-## 0.044 
+## 0.035 
 
 
 
 ###### GRAY ######
 ########## Apply GBM on GRAY ##########
-gray_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/data/gray_features.csv",as.is = T)[,-c(1:2)]
+gray_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/gray_features.csv",as.is = T)[,-c(1:2)]
 ######### set 70% sift_train_data as training data #############
-set.seed(3)
-train_index <- sort(sample(1:length(label_train),0.7*length(label_train)))
+
 train_df3 <- data.frame(gray_train[train_index,])
 train_df3$label <- label_train[train_index]
 test_df3 <- data.frame(gray_train[-train_index,])
 test_df3$label <- label_train[-train_index]
 
-tm_gbm_train <- system.time(gbm_gray_fit_subset <- gbm_train(train_df3,train_df3$label, n.trees=132, run.cv = F))
+tm_gbm_train <- system.time(gbm_gray_fit_subset <- gbm_train(train_df3,train_df3$label, n.trees=117, run.cv = F))
+train_label3 <- gbm_test(gbm_gray_fit_subset,train_df3)
 tm_gbm_predict <- system.time(pred_label3 <- gbm_test(gbm_gray_fit_subset,test_df3))
 
+mean(train_df3$label == train_label3) 
+## 0.6561905
 mean(test_df3$label == pred_label3) 
-## 0.5444444
+## 0.5544444
 tm_gbm_train[3]
-## 4.271 
+## 3.927 
 tm_gbm_predict[3]
-## 0.036 
+## 0.034 
 
 
 
 ###### PCA ######
 ########## Apply GBM on PCA ##########
-pca_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/data/sift_pca.csv",as.is = T)[,-1]
+pca_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/sift_pca.csv",as.is = T)[,-1]
 ######### set 70% sift_train_data as training data #############
-set.seed(4)
-train_index <- sort(sample(1:length(label_train),0.7*length(label_train)))
+
 train_df4 <- data.frame(pca_train[train_index,])
 train_df4$label <- label_train[train_index]
 test_df4 <- data.frame(pca_train[-train_index,])
 test_df4$label <- label_train[-train_index]
 
-tm_gbm_train <- system.time(gbm_pca_fit_subset <- gbm_train(train_df4,train_df4$label, n.trees=182, run.cv = F))
+tm_gbm_train <- system.time(gbm_pca_fit_subset <- gbm_train(train_df4,train_df4$label, n.trees=315, run.cv = F))
+train_label4 <- gbm_test(gbm_pca_fit_subset,train_df4)
 tm_gbm_predict <- system.time(pred_label4 <- gbm_test(gbm_pca_fit_subset,test_df4))
 
+mean(train_df4$label == train_label4) 
+## 0.8642857
 mean(test_df4$label == pred_label4) 
-## 0.6577778
+## 0.7388889
 tm_gbm_train[3]
-## 0.365
+## 3.728
 tm_gbm_predict[3]
-## 0.02
+## 0.029 
 
+
+###### COLOR ######
+########## Apply GBM on COLOR ##########
+color_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/color_features.csv",as.is = T)[,-1]
+######### set 70% sift_train_data as training data #############
+
+train_df5 <- data.frame(color_train[train_index,])
+train_df5$label <- label_train[train_index]
+test_df5 <- data.frame(color_train[-train_index,])
+test_df5$label <- label_train[-train_index]
+
+tm_gbm_train <- system.time(gbm_color_fit_subset <- gbm_train(train_df5,train_df5$label, n.trees=441, run.cv = F))
+train_label5 <- gbm_test(gbm_color_fit_subset,train_df5)
+tm_gbm_predict <- system.time(pred_label5 <- gbm_test(gbm_color_fit_subset,test_df5))
+
+mean(train_df5$label == train_label5) 
+## 0.9638095
+mean(test_df5$label == pred_label5) 
+## 0.87
+tm_gbm_train[3]
+## 95.452
+tm_gbm_predict[3]
+## 0.86
 
