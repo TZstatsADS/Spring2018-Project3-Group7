@@ -377,7 +377,9 @@ if( !run.cv ){
     model_best <- list(cost=50, gamma=1)
   }
   if( run.xgboost ){
-    model_best <- list(mtry = 20, ntree = 2000)
+    model_best <- list("objective"="multi:softmax",
+                       "eval_metrix"="mloglossnum_class"=3,
+                       "eta"=0.1,"max_depth"=4,"nround"=250)
   }
   if( run.adaboost ){
     model_best <- list(ntree = 30)
