@@ -65,10 +65,10 @@ model.train = T
 
 # Boolean variables for Feature Extraction procedures
 ```{r exp_setup, eval=F}
-run.pca = FALSE
-run.hogs = FALSE
 run.sift = FALSE
 run.sift_pca = FALSE
+run.gray = FALSE
+run.hogs = FALSE
 run.color = TRUE
 ```
 
@@ -127,10 +127,10 @@ source("../lib/feature.R")
 tm_feature_train <- NA
 if(run.feature.train){
   tm_feature_train <- system.time(dat_train <- feature(img_train_dir, 
-                                                       run.pca = run.pca,
-                                                       run.hogs = run.hogs,
                                                        run.sift = run.sift,
                                                        run.sift_pca = run.sift_pca,
+                                                       run.gray = run.gray,
+                                                       run.hogs = run.hogs,
                                                        run.color = run.color,
                                                        export=TRUE))
 }
@@ -138,11 +138,11 @@ if(run.feature.train){
 tm_feature_test <- NA
 if(run.feature.test){
   tm_feature_test <- system.time(dat_test <-   feature(img_test_dir, 
-                                                       run.pca = run.pca,
-                                                       run.hogs = run.hogs,
                                                        run.sift = run.sift,
                                                        run.sift_pca = run.sift_pca,
-                                                       run.color = run.color, 
+                                                       run.gray = run.gray,
+                                                       run.hogs = run.hogs,
+                                                       run.color = run.color,
                                                        export=TRUE))
 }
 
