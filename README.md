@@ -14,6 +14,9 @@ Term: Spring 2018
    + Yan, Xiuruo [xy2358@columbia.edu]()
 
 + Project summary: In this project, we created a classification engine for images of dogs versus fried chicken versus blueberry muffins. 
+
+![Accuracy](figs/Accuracy Result.png)
+![Errors for all models](figs/Train:Test Error for all Models.png)
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
  
