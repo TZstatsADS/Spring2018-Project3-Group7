@@ -134,3 +134,32 @@ save(pred, file = "../output/Gray_pred_test_svm_rbf.RData")
 error <- mean(pred != y.test) 
 cat("Time for testing model = ", tm_test[3], "s \n") # 0.676 s
 cat("RBF Kernel SVM with Gray Accuracy = ", 1-error) #0.53
+
+###Color Feature###
+set.seed(4321)
+# load data
+X <- read.csv("../output/color_features.csv", header = T)[,-1]
+index <- sample(1:nrow(X), 0.75*nrow(X), replace=FALSE)
+X.train <- X[index,]
+X.test  <- X[-index,]
+y.train <- y[index]
+
+# tune svm with multiple classes using the one-versus-one approach
+tune.out <- tune(svm, train.x = X.train, train.y = y.train, kernel = "radial",
+                 scale = FALSE, ranges = par.list, tunecontrol = k)
+
+tune.out$best.parameters # cost = 50, gamma = 1
+tune.out$best.performance # 0.2356
+performances <- tune.out$performances
+save(tune.out, file="../output/color_fit_train_svm_rbf.RData")
+
+# train the best model on the whole training set
+best_model_color_rbf <- tune.out$best.model  
+best_model_color_rbf # cost = 50, gamma = 1
+tm_train <- system.time(train.svm(X.train, y.train, tune.out$best.parameters))
+cat("Time for training model = ", tm_train[3], "s \n")  # 23.969 s
+tm_test <- system.time(pred <- predict(best_model_color_rbf, X.test)) 
+save(pred, file = "../output/color_pred_test_svm_rbf.RData")
+error <- mean(pred != y.test) 
+cat("Time for testing model = ", tm_test[3], "s \n") # 2.683 s
+cat("RBF Kernel SVM with color Accuracy = ", 1-error) #0.7244
