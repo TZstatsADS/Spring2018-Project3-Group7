@@ -90,7 +90,13 @@ svm_lin_values <- list(cost = c(0.1, 1, 10, 50, 100, 150))
 svm_rbf_values <- list(cost = c(0.1, 1, 10, 50, 100, 150), 
                        gamma = c(0.01, 0.5, 1, 5, 10)) 
 # for XGboost
-xgboost_values <- seq(0.01,0.25,0.05)
+xgboost_values <- list(nrounds=c(100,250,500),
+                       eta = c(1,0.1,0.01),
+                       max_depth = c(2,4,6,8,10),
+                       gamma=1,
+                       colsample_bytree=0.5,
+                       min_child_weight=2,
+                       subsample = 1))
 # for Logistic Regression
 lg_values <- list(maxit = seq(10,30,1))
 # for Adaboost
