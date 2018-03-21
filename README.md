@@ -21,7 +21,7 @@ Term: Spring 2018
  + **Huang, Yuexuan：**  Builded baseline model(GBM). Applied GBM with SIFT, HOG, Gray, PCA features. Modified the train.R, test.R and cross_validation.R files.
  + **Li, Xinrou：**
  + **Liu, Fangbing：** Created HOG feature, SVM Linear model and SVM with RBF Kernel model. Also modified the feature.R, train.R, test.R and cross_validation.R files. And organized the GitHub folders.
- + **Yan, Xiuruo：** 
+ + **Yan, Xiuruo：** Created gray feature, color feature and builed adaboost model and logistic model. Applied these two models with SIFT, HOG, Gray, PCA features. Modified the feature.R, train.R, test.R and main.Rmd files.
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
