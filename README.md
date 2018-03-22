@@ -21,7 +21,7 @@ Term: Spring 2018
 
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
  
- + **Chandak, Anshuma：** Built XG Boost model, and created SIFT + PCA feature. Applied XG Boost with SIFT, HOG, Gray, PCA, COLOR features. Modified the train.R and test.R files. Created the powerpoint presentation. Also, the presenter of this project from the group. 
+ + **Chandak, Anshuma：** Kept track of the group meetings, and set the timeline for project completion.Built XG Boost model, and created SIFT + PCA feature. Applied XG Boost with SIFT, HOG, Gray, PCA, COLOR features. Modified the train.R and test.R files. Created the powerpoint presentation. Also, the presenter of this project from the group. 
  + **Huang, Yuexuan：**  Built baseline model(GBM). Applied GBM with SIFT, HOG, Gray, PCA features. Modified the train.R, test.R and cross_validation.R files.
  + **Li, Xinrou：**
  + **Liu, Fangbing：** Created HOG feature and built SVM Linear model and SVM with RBF Kernel model and applied them to all the features. Also modified the train.R, test.R and cross_validation.R files. Created the summary plots for the final result. And organized the GitHub folders.
