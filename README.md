@@ -23,7 +23,7 @@ Term: Spring 2018
  
  + **Chandak, Anshuma：** Kept track of the group meetings, and set the timeline for project completion.Built XG Boost model, and created SIFT + PCA feature. Applied XG Boost with SIFT, HOG, Gray, PCA, COLOR features. Modified the train.R and test.R files. Created the powerpoint presentation. Also, the presenter of this project from the group. 
  + **Huang, Yuexuan：**  Built baseline model(GBM). Applied GBM with SIFT, HOG, Gray, PCA features. Modified the train.R, test.R and cross_validation.R files.
- + **Li, Xinrou：**
+ + **Li, Xinrou：** Built the Random Forest Model, and trained Random Forest Model with SIFT, HOG, Gray, PCA, SIFT+PCA features with different parameters. Modified the main.Rmd files, feature.R, train.R, and test.R.
  + **Liu, Fangbing：** Created HOG feature and built SVM Linear model and SVM with RBF Kernel model and applied them to all the features. Also modified the train.R, test.R and cross_validation.R files. Created the summary plots for the final result. And organized the GitHub folders.
  + **Yan, Xiuruo：** Created gray feature, color feature and built adaboost model and logistic model. Applied these two models with SIFT, HOG, Gray, PCA, COLOR features. Modified the feature.R, train.R, test.R and main.Rmd files. 
 
