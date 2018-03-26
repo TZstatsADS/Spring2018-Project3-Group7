@@ -140,8 +140,8 @@ cat("Time for making prediction=", tm_test[1], "s \n")  # 0.225 s
 
 
 ##########gray
-train_data<-gray[train_index,]
-test_data<-gray[-train_index,]
+train_data<-gray[train_index,-1]
+test_data<-gray[-train_index,-1]
 
 
 # Choosing between different values of maximum interation for Logistic
@@ -164,7 +164,7 @@ arrows(iter_values, err_cv[,1]-err_cv[,2],iter_values, err_cv[,1]+err_cv[,2],
 
 
 # Choose the best parameter value
-min(err_cv[,1])  # 0604
+min(err_cv[,1])  # 0.5035556
 iter_best <- iter_values[which.min(err_cv[,1] + err_cv[,2])]
 par_best <- list(maxit=iter_best) 
 par_best # maxit=11 is the best
@@ -173,18 +173,18 @@ par_best # maxit=11 is the best
 tm_train <- system.time(fit_train <- train.lg(train_data, train_labels, par_best))
 pred_train <- test.lg(fit_train, train_data)
 train.error <- mean(pred_train != train_labels)
-train.error #0.000444
-1-train.error 
+train.error #0.484
+1-train.error #0.516
 
 ### Make prediction 
 tm_test <- system.time(pred_test <- test.lg(fit_train, test_data))
 test.error <- mean(pred_test != test_labels)
-test.error #0.572
-1-test.error  #0.428
+test.error #0.508
+1-test.error  #0.492
 
 ### Summarize Running Time
-cat("Time for training model=", tm_train[1], "s \n") # 33.1 s 
-cat("Time for making prediction=", tm_test[1], "s \n")  # 0.202 s
+cat("Time for training model=", tm_train[1], "s \n") # 0.315 s 
+cat("Time for making prediction=", tm_test[1], "s \n")  # 0.016 s 
 
 
 
