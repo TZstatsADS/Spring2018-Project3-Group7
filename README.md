@@ -15,9 +15,9 @@ Term: Spring 2018
 
 + Project summary: In this project, we created a classification engine for images of dogs versus fried chicken versus blueberry muffins. 
 
-![Accuracy](figs/Accuracy_Result.png) 
-![Errors for all models](figs/Train_Test_Error_for_all_Models.png)
-![Errors with SIFT/Color Feature](figs/Train_Test_Error_with_SIFT_COLOR.png)
+![Accuracy](figs/Accuary_for_all_models.png) 
+![Errors for all models](figs/Test_Train_Error_All_Model.png)
+![Errors with SIFT/Color Feature](figs/Test_Train_Error_SIFT_COLOR.png)
 
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
  
