@@ -13,7 +13,9 @@ Term: Spring 2018
    + Liu, Fangbing [fl2476@columbia.edu]()
    + Yan, Xiuruo [xy2358@columbia.edu]()
 
-+ Project summary: In this project, we created a classification engine for images of dogs versus fried chicken versus blueberry muffins. 
++ Project summary: In this project, we created a classification engine for images of dogs versus fried chicken versus blueberry muffins. Our Client is using a classification engine using boosted decision stumps on SIFT features. Our task is to propose a feasible improvement in client’s current practice to distinguish pictures of dogs (poodles and Chihuahuas), fried chicken and blueberry muffins. We were given a training set of 3000 images to train a new model. Our proposed model is using Gradient Boosting Machines on Color (RGB + HGV) features. The model leads to 13 percent error rate, with a running time of 0.86 seconds. This is a huge improvement from the Client's original model, which had an error rate of ~29 % .
+
+The following charts give an exhaustive visual understanding of the performance of all the models we used using the different features we extracted.
 
 ![Accuracy](figs/Accuary_for_all_models.png) 
 ![Errors for all models](figs/Test_Train_Error_All_Model.png)
