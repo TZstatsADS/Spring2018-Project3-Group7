@@ -43,9 +43,9 @@ gbm_test <- function(model_fit,data){
   return(pred_label)
 }
 
-color_train <- read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/output/color_features.csv",as.is = T)[,-1]
+color_train <- read.csv("../output/color_features.csv",as.is = T)[,-1]
 
-label_train <- as.vector(read.csv("~/Documents/GitHub/Spring2018-Project3-Group7/data/image/label_train.csv",as.is = T)[,3])
+label_train <- as.vector(read.csv("../data/image/label_train.csv",as.is = T)[,3])
 label_train <- label_train - 1
 
 set.seed(1)
@@ -54,9 +54,12 @@ train_index <- sort(sample(1:length(label_train),0.7*length(label_train)))
 train_df5 <- data.frame(color_train[train_index,])
 train_df5$label <- label_train[train_index]
 #test_df5 <- data.frame(color_train[-train_index,])
-#test_df5$label <- label_train[-train_index]
+
 
 tm_gbm_train <- system.time(gbm_color_fit_subset <- gbm_train(train_df5,train_df5$label, n.trees=441, run.cv = F))
 
-# pred_label5 <- gbm_test(gbm_color_fit_subset,test_df5)
-# pred_label5 <- pred_label5 + 1
+test_df5<-read.csv("../output/color_features_test.csv",as.is = T)
+
+pred_label5 <- gbm_test(gbm_color_fit_subset,test_df5)
+pred_label5 <- pred_label5 + 1
+write.csv(pred_label5,"../output/gbm_color_test_label-xy.csv",row.names = F)
