@@ -29,7 +29,7 @@ The following charts give an exhaustive visual understanding of the performance 
  + **Liu, Fangbing：** Created HOG feature and built SVM Linear model and SVM with RBF Kernel model and applied them to all the features. Also modified the train.R, test.R and cross_validation.R files. Created the summary plots for the final result. And organized the GitHub folders.
  + **Yan, Xiuruo：** Created gray feature, color feature and built adaboost model and logistic model. Applied these two models with SIFT, HOG, Gray, PCA, COLOR features. Modified the feature.R, train.R, test.R and main.Rmd files. 
 
-References used: 
+References used:  
 1. https://rpubs.com/mharris/multiclass_xgboost : Perform XGBoost  
 2. https://en.wikipedia.org/wiki/AdaBoost : Perform Adaboost  
 3. http://r-statistics.co/Logistic-Regression-With-R.html : Perform Logstic  
