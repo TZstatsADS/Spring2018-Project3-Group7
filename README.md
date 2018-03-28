@@ -34,7 +34,10 @@ References used:
 2. https://en.wikipedia.org/wiki/AdaBoost : Perform Adaboost  
 3. http://r-statistics.co/Logistic-Regression-With-R.html : Perform Logstic  
 4. http://www.milanor.net/blog/cross-validation-for-predictive-analytics-using-r/ : CV error  
-5. https://cran.r-project.org/web/packages/gbm/gbm.pdf : Perform GBM
+5. https://cran.r-project.org/web/packages/gbm/gbm.pdf : Perform GBM  
+6. https://perso.math.univ-toulouse.fr/motimo/files/2013/07/random-forest.pdf: Perform Random Forest  
+7. https://cran.r-project.org/web/packages/randomForest/randomForest.pdf: Perform Random Forest  
+8. 
 
 
 
