@@ -29,16 +29,20 @@ begin=Sys.time()
 adabag_fit30=boosting(labels~.,train_data[,-1],mfinal=30,coeflearn="Zhu")
 end=Sys.time()
 end-begin
-#
+#8.190333 mins
+
+pred_adabag30=predict.boosting(adabag_fit30,newdata = train_data[,-1])
+mean((as.integer(pred_adabag30$class)) !=train_labels)
+#0.01377778
 
 pred_begin=Sys.time()
 pred_adabag30=predict.boosting(adabag_fit30,newdata = test_data[,-1])
 pred_end=Sys.time()
 pred_end-pred_begin
-#
+#6.68413 secs
 
 mean((as.integer(pred_adabag30$class)) ==test_labels)
-#
+#0.6533333
 
 ######## ntree=20
 begin=Sys.time()
@@ -75,8 +79,8 @@ mean((as.integer(pred_adabag10$class))==test_labels)
 
 
 ##########gray
-train_data<-gray[train_index,]
-test_data<-gray[-train_index,]
+train_data<-gray[train_index,-1]
+test_data<-gray[-train_index,-1]
 train_data$labels<-factor(train_labels)
 
 ######## ntree=30
@@ -84,48 +88,52 @@ begin=Sys.time()
 adabag_fit30=boosting(labels~.,train_data[,-1],mfinal=30,coeflearn="Zhu")
 end=Sys.time()
 end-begin
-#
+#1.312585 mins
+
+pred_adabag30=predict.boosting(adabag_fit30,newdata = train_data[,-1])
+mean((as.integer(pred_adabag30$class)) !=train_labels)
+#0.1066667
 
 pred_begin=Sys.time()
 pred_adabag30=predict.boosting(adabag_fit30,newdata = test_data[,-1])
 pred_end=Sys.time()
 pred_end-pred_begin
-#
+#0.608757 secs
 
 mean((as.integer(pred_adabag30$class)) ==test_labels)
-#
+#0.5346667
 
 ######## ntree=20
 begin=Sys.time()
 adabag_fit20=boosting(labels~.,train_data[,-1],mfinal=20,coeflearn="Zhu")
 end=Sys.time()
 end-begin
-#
+#56.38125 secs
 
 pred_begin=Sys.time()
 pred_adabag20=predict.boosting(adabag_fit20,newdata = test_data[,-1])
 pred_end=Sys.time()
 pred_end-pred_begin
-#
+#0.3929579 secs
 
 mean((as.integer(pred_adabag20$class))==test_labels)
-#
+#0.5146667
 
 ######## ntree=10
 begin=Sys.time()
 adabag_fit10=boosting(labels~.,train_data[,-1],mfinal=10,coeflearn="Zhu")
 end=Sys.time()
 end-begin
-#
+#30.88762 secs
 
 pred_begin=Sys.time()
 pred_adabag10=predict.boosting(adabag_fit10,newdata = test_data[,-1])
 pred_end=Sys.time()
 pred_end-pred_begin
-#
+#0.387382 secs
 
 mean((as.integer(pred_adabag10$class))==test_labels)
-#
+#0.5173333
 
 
 
@@ -141,6 +149,10 @@ adabag_fit30=boosting(labels~.,train_data[,-1],mfinal=30,coeflearn="Zhu")
 end=Sys.time()
 end-begin
 #17.88422 secs
+
+pred_adabag30=predict.boosting(adabag_fit30,newdata = train_data[,-1])
+mean((as.integer(pred_adabag30$class)) !=train_labels)
+#0.04577778
 
 pred_begin=Sys.time()
 pred_adabag30=predict.boosting(adabag_fit30,newdata = test_data[,-1])
@@ -158,6 +170,10 @@ adabag_fit20=boosting(labels~.,train_data[,-1],mfinal=20,coeflearn="Zhu")
 end=Sys.time()
 end-begin
 #12.9455 secs
+
+pred_adabag20=predict.boosting(adabag_fit20,newdata = train_data[,-1])
+mean((as.integer(pred_adabag20$class)) !=train_labels)
+#0.07066667
 
 pred_begin=Sys.time()
 pred_adabag20=predict.boosting(adabag_fit20,newdata = test_data[,-1])
@@ -203,6 +219,10 @@ adabag_fit30=boosting(labels~.,train_data[,-1],mfinal=30,coeflearn="Zhu")
 end=Sys.time()
 end-begin
 #28.71619 secs
+
+pred_adabag30=predict.boosting(adabag_fit30,newdata = train_data[,-1])
+mean((as.integer(pred_adabag30$class)) !=train_labels)
+#3
 
 pred_begin=Sys.time()
 pred_adabag30=predict.boosting(adabag_fit30,newdata = test_data[,-1])
@@ -265,6 +285,10 @@ adabag_fit30=boosting(labels~.,train_data[,-1],mfinal=30,coeflearn="Zhu")
 end=Sys.time()
 end-begin
 #4.310529 mins
+
+pred_adabag30=predict.boosting(adabag_fit30,newdata = train_data[,-1])
+mean((as.integer(pred_adabag30$class)) !=train_labels)
+#0.0004444444
 
 pred_begin=Sys.time()
 pred_adabag30=predict.boosting(adabag_fit30,newdata = test_data[,-1])
