@@ -1,7 +1,8 @@
 #color features
 library("EBImage")
 
-img_names<-list.files("data/image/images/")
+#img_names<-list.files("../data/image/images/")
+#img-names<-list.files("../data/")
 
 Rbin<-seq(0,1,length.out =  10) 
 Gbin<-seq(0,1,length.out = 10)
@@ -48,4 +49,5 @@ for(i in 1:3000){
 }
 
 color_features<-merge(rgb_features,hsv_features,by.x = "Image",by.y="Image")
-write.csv(color_features,"../output/color_features.csv",row.names = F)
+#write.csv(color_features,"../output/color_features.csv",row.names = F)
+#write.csv(color_features,"../output/color_features_test.csv",row.names = F)
