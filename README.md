@@ -33,7 +33,7 @@ References used:
 1. https://rpubs.com/mharris/multiclass_xgboost : Perform XGBoost  
 2. https://en.wikipedia.org/wiki/AdaBoost : Perform Adaboost  
 3. http://r-statistics.co/Logistic-Regression-With-R.html : Perform Logstic  
-4. http://www.milanor.net/blog/cross-validation-for-predictive-analytics-using-r/ : CV error
+4. http://www.milanor.net/blog/cross-validation-for-predictive-analytics-using-r/ : CV error  
 5. https://cran.r-project.org/web/packages/gbm/gbm.pdf : Perform GBM
 
 
@@ -50,3 +50,4 @@ proj/
 ```
 
 Please see each subfolder for a README file.
+ 
