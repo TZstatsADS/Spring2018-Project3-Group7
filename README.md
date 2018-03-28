@@ -30,8 +30,11 @@ The following charts give an exhaustive visual understanding of the performance 
  + **Yan, Xiuruo：** Created gray feature, color feature and built adaboost model and logistic model. Applied these two models with SIFT, HOG, Gray, PCA, COLOR features. Modified the feature.R, train.R, test.R and main.Rmd files. 
 
 References used: 
-1. https://rpubs.com/mharris/multiclass_xgboost : Perform XGBoost
-2. 
+1. https://rpubs.com/mharris/multiclass_xgboost : Perform XGBoost  
+2. https://en.wikipedia.org/wiki/AdaBoost : Perform Adaboost  
+3. http://r-statistics.co/Logistic-Regression-With-R.html : Perform Logstic  
+4. http://www.milanor.net/blog/cross-validation-for-predictive-analytics-using-r/ : CV error
+
 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
