@@ -1,4 +1,4 @@
-# Project: Dogs, Fried Chicken or Blueberry Muffins?
+# Project 3: Dogs, Fried Chicken or Blueberry Muffins?
 ![image](figs/desc.jpg)
 
 ### [Full Project Description](doc/project3_desc.md)
