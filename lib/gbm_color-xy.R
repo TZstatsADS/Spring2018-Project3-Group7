@@ -60,6 +60,7 @@ tm_gbm_train <- system.time(gbm_color_fit_subset <- gbm_train(train_df5,train_df
 
 test_df5<-read.csv("../output/color_features_test.csv",as.is = T)
 
-pred_label5 <- gbm_test(gbm_color_fit_subset,test_df5)
-pred_label5 <- pred_label5 + 1
+tm_gbm_predict <- system.time(pred_label <- gbm_test(gbm_sift_fit_subset,test_df))
+pred_label <- gbm_test(gbm_color_fit_subset,test_df5)
+pred_label <- pred_label + 1
 write.csv(pred_label5,"../output/gbm_color_test_label-xy.csv",row.names = F)
