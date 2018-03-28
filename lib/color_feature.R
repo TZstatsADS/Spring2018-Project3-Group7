@@ -48,4 +48,4 @@ for(i in 1:3000){
 }
 
 color_features<-merge(rgb_features,hsv_features,by.x = "Image",by.y="Image")
-write.csv(color_features,"data/color_features.csv",row.names = F)
+write.csv(color_features,"../output/color_features.csv",row.names = F)

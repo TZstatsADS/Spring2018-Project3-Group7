@@ -1,16 +1,21 @@
-########################## XG BOOST + HOG #########################
+######################### XG BOOST + Color ##############################
 
-# Use HOG features
-feature_hog<-read.csv("hog_feature.csv",header = T, as.is = T)
+
+# Use color features
+feature_color<-read.csv("/Users/anshuma/Documents/GitHub/Spring2018-Project3-spring2018-project3-group7/output/color_features.csv",header = T, as.is = T)
 label<-read.csv("label_train.csv",header = T,as.is = T)
 #changing values in label
 label$label[label$label==1]<-0
 label$label[label$label==2]<-1
 label$label[label$label==3]<-2
-dat<-cbind(label[,2],feature_hog[,-1])
+dat<-cbind(label[,2],feature_color[,-1])
 colnames(dat)[1]<-"label"
 
-train_index<-sample(1:nrow(dat),0.7*nrow(dat)) #70 percent in training set (decided arbitrarily)
+#train and test set prep
+
+set.seed(500)
+# Train and test split
+train_index<-sample(1:nrow(dat),0.7*nrow(dat))
 
 xgb_variables<-as.matrix(dat[,-1]) # Full dataset
 xgb_label<-dat[,1] # Full label
@@ -25,8 +30,8 @@ xgb_test<-xgb_variables[-train_index,]
 test_label<-xgb_label[-train_index]
 test_matrix<-xgb.DMatrix(data = xgb_test, label=test_label)
 
-# Basic model
 
+# Basic model
 basic = xgboost(data = train_matrix, label = train_label,
                 max.depth=3,eta=0.01,nthread=2,nround=50,
                 objective = "multi:softprob",
@@ -42,24 +47,25 @@ prediction<-matrix(pred,nrow = 3,ncol = length(pred)/3) %>%
 ## confusion matrix of test set
 confusionMatrix(factor(prediction$label),factor(prediction$max_prob),mode = "everything")
 
-# Accuracy : 68 %
+
+#Accuracy: 77.67 %
 
 
 # Tune the model
-xgb_params_1 = list(objective="multi:softprob",
+xgb_params_5 = list(objective="multi:softprob",
                     eta = 0.01,
                     max.depth = 3,
                     eval_metric = "mlogloss",
                     num_class = 3)
 
 # fit the model with arbitrary parameters
-xgb_1 = xgboost(data = train_matrix, 
+xgb_5 = xgboost(data = train_matrix, 
                 label = train_label,
-                params = xgb_params_1,
+                params = xgb_params_5,
                 nrounds = 100)
 
 # cross validation
-xgb_cv_1 = xgb.cv(params = xgb_params_1,
+xgb_cv_5 = xgb.cv(params = xgb_params_5,
                   data = train_matrix, 
                   nrounds = 100,
                   nfold = 5,
@@ -69,7 +75,7 @@ xgb_cv_1 = xgb.cv(params = xgb_params_1,
                   prediction = T)
 
 # set up the cross validated hyper-parameter search
-xgb_grid_1 = expand.grid(nrounds=c(100,250,500),
+xgb_grid_5 = expand.grid(nrounds=c(100,250,500),
                          eta = c(1,0.1,0.01),
                          max_depth = c(2,4,6,8,10),
                          gamma=1,
@@ -78,7 +84,7 @@ xgb_grid_1 = expand.grid(nrounds=c(100,250,500),
                          subsample = 1)
 
 # pack the training control parameters
-xgb_trcontrol_1 = trainControl(method = "cv",
+xgb_trcontrol_5 = trainControl(method = "cv",
                                number = 5,
                                verboseIter = T,
                                returnData = F,
@@ -88,27 +94,26 @@ xgb_trcontrol_1 = trainControl(method = "cv",
 # train the model for each parameter combination in the grid
 
 ptm <- proc.time() ## start the time
-xgb_train_1 = train(x=train_matrix, y=train_label,
-                    trControl = xgb_trcontrol_1,
-                    tuneGrid = xgb_grid_1,
+xgb_train_5 = train(x=train_matrix, y=train_label,
+                    trControl = xgb_trcontrol_5,
+                    tuneGrid = xgb_grid_5,
                     method = "xgbTree")
 
 ptm2 <- proc.time()
 ptm2- ptm ## stop the clock
 
+#user   system  elapsed 
+#4326.378   14.305 2186.413 
 
-## user      system    elapsed 
-## 318.835   1.266     161.730 
 
-
-head(xgb_train_1$results[with(xgb_train_1$results,order(RMSE)),],5)
+head(xgb_train_5$results[with(xgb_train_5$results,order(RMSE)),],5)
 # get the best model's parameters
-xgb_train_1$bestTune
+xgb_train_5$bestTune
 
-# best model
-best = xgboost(data=train_matrix,max.depth=4,eta=0.1,nthread=2,nround=250,colsample_bytree=0.5,min_child_weight=2,subsample=1,objective="multi:softprob",eval_metric="mlogloss",num_class=3)
 
-pred = predict(best, test_matrix)
+bst = xgboost(data=train_matrix,max.depth=4,eta=0.1,nthread=2,nround=250,colsample_bytree=0.5,min_child_weight=2,subsample=1,objective="multi:softprob",eval_metric="mlogloss",num_class=3)
+
+pred = predict(bst, test_matrix)
 prediction<-matrix(pred,nrow = 3,ncol = length(pred)/3) %>%
   t() %>%
   data.frame() %>%
@@ -118,5 +123,15 @@ prediction<-matrix(pred,nrow = 3,ncol = length(pred)/3) %>%
 confusionMatrix(factor(prediction$label),factor(prediction$max_prob),mode = "everything")
 
 
+#Accuracy 85 % 
 
-#### Accuracy: 75 %
+
+# Train
+pred1 = predict(bst, train_matrix)
+prediction1<-matrix(pred1,nrow = 3,ncol = length(pred1)/3) %>%
+  t() %>%
+  data.frame() %>%
+  mutate(label=train_label+1,max_prob=max.col(.,"last"))
+
+## confusion matrix of train set
+confusionMatrix(factor(prediction1$label),factor(prediction1$max_prob),mode = "everything")

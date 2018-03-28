@@ -133,3 +133,32 @@ save(pred, file = "../output/gray_pred_test_svm_lin.RData")
 error <- mean(pred != y.test) 
 cat("Time for testing model = ", tm_test[3], "s \n") # 0.612 s
 cat("Liner SVM with Gray Accuracy = ", 1-error) #0.48
+
+###Color Feature###
+set.seed(4321)
+# load data
+X <- read.csv("../output/color_features.csv", header = T)[,-1]
+index <- sample(1:nrow(X), 0.75*nrow(X), replace=FALSE)
+X.train <- X[index,]
+X.test  <- X[-index,]
+y.train <- y[index]
+
+# tune svm with multiple classes using the one-versus-one approach
+tune.out <- tune(svm, train.x = X.train, train.y = y.train, kernel = "linear",
+                 scale = FALSE, ranges = par.list, tunecontrol = k)
+
+tune.out$best.parameters # cost = 150
+tune.out$best.performance # 0.2773
+performances <- tune.out$performances
+save(tune.out, file="../output/color_fit_train_svm_lin.RData")
+
+# train the best model on the whole training set
+best_model_color_lin <- tune.out$best.model  
+best_model_color_lin # cost = 150
+tm_train <- system.time(train.svm(X.train, y.train, tune.out$best.parameters[[1]]))
+cat("Time for training model = ", tm_train[3], "s \n")  # 23.969 s
+tm_test <- system.time(pred <- predict(best_model_color_lin, X.test)) 
+save(pred, file = "../output/color_pred_test_svm_lin.RData") 
+error <- mean(pred != y.test) 
+cat("Time for testing model = ", tm_test[3], "s \n") # 2.624 s
+cat("Liner SVM with color Accuracy = ", 1-error) #0.7031

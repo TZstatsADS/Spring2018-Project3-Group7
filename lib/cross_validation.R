@@ -2,29 +2,89 @@
 ### Cross Validation ###
 ########################
 
-### Author: Fangbing Liu, Yuexuan Huang
+### Group 7
 ### Project 3
-### ADS Spring 2016
+### ADS Spring 2018
 
-## Baseline Model
-cv.gbm <- function(trees, K, train_df){
+cv.function <- function(X.train, y.train, d, K,
+                        cv.gbm = F, cv.svm.lin = F, 
+                        cv.svm.rbf = F, cv.xgboost = F,
+                        cv.rf = F, cv.lr = F, cv.adaboost = F){
   
-  gbmWithCrossValidation = gbm(label~ ., data = train_df, distribution = "multinomial", 
-                               n.trees = trees, shrinkage = .1, cv.folds = 10, n.cores = 1)
+  n <- length(y.train[,2])
+  n.fold <- floor(n/K)
+  s <- sample(rep(1:K, c(rep(n.fold, K-1), n-(K-1)*n.fold)))  
+  cv.error <- rep(NA, K)
   
-  return(gbm.perf(gbmWithCrossValidation))
-}
+  for (i in 1:K){
+    train.data <- X.train[s != i,]
+    train.label <- y.train[s != i,]
+    test.data <- X.train[s == i,]
+    test.label <- y.train[s == i,]
+    print('train.data:')
+    print(dim(train.data))
+    
+    ## cross validate to GBM model
+    if(cv.gbm){
+      
+      params <- d
+      fit <- train(train.data, train.label, params, run.gbm = TRUE)
+      pred <- test(fit, test.data, test.gbm = T)
+      
+    }
+    
+    ## cross validate to Linear SVM model
+    if(cv.svm.lin){
+      params <- d
+      fit <- train(train.data, train.label, params, run.svm.lin = TRUE)
+      pred <- test(fit, test.data, test.svm.lin = T)
+      
+    }
+    
+    ## cross validate to RBF Kernel SVM model
+    if(cv.svm.rbf){
+      params <- d
+      fit <- train(train.data, train.label, params, run.svm.rbf = TRUE)
+      pred <- test(fit, test.data, test.svm.rbf = T)
+      
+    }
+    
+    ## cross validate to RF model
+    if(cv.rf){
+      params <- d
+      fit <- train(train.data, train.label, params, run.rf = T)
+      pred <- test(fit, test.data, test.rf = T)
 
-## SVM with RBF Kernel Model
-cv.svm.rbf <- function(train.df, par.range, K){
-  # tune svm with multiple classes using the one-versus-one approach
-  tune.out = tune(svm, label~., data = trian_df, 
-                  kernel = "radial",
-                  scale = FALSE, 
-                  ranges = par.range, 
-                  tunecontrol = tune.control(cross = K))
+    }
+    
+    ## cross validate xgboost model
+    if(cv.xgboost){
+      
+      fit <- train(train.data, train.label, params = NULL, run.xgboost = T)
+      pred <- test(fit, test.data, test.xgboost = T)
+      
+    }
+    
+    ## cross validate logistic regression model
+    if(cv.lr){
+      
+      fit <- train(train.data, train.label, params = NULL, run.lr = T)
+      pred <- test(fit, test.data, test.lr = T)
+      
+    }
+    
+    ## cross validate adaboost model
+    if(cv.adaboost){
+      
+      fit <- train(train.data, train.label, params = NULL, run.adaboost = T)
+      pred <- test(fit, test.data, test.adaboost = T)
+      
+    }
+    
+    cv.error[i] <- mean(pred != y.train[s == i,2])  
+    
+  }			
   
-  best.para.svm.rbf <- tune.out$best.parameters 
+  return(c(mean(cv.error),sd(cv.error)))
   
-  return(best.par.svm.rbf)
 }
