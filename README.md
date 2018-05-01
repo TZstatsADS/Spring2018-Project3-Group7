@@ -40,7 +40,8 @@ References used:
 7. https://cran.r-project.org/web/packages/randomForest/randomForest.pdf: Perform Random Forest  
 8. https://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/ 
    https://github.com/TZstatsADS/Fall2017-project3-grp9/blob/master/lib/hog_features.R: HOG 
-9. https://github.com/TZstatsADS/Fall2017-project3-grp8/blob/master/lib/svm/linear%20svm.Rmd: SVM
+9. https://github.com/TZstatsADS/Fall2017-project3-grp8/blob/master/lib/svm/linear%20svm.Rmd: SVM. 
+10. https://github.com/TZstatsADS/Fall2017-project3-grp9/blob/master/lib/color_features.R : Color feature
 
 
 
