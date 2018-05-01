@@ -39,7 +39,7 @@ References used:
 6. https://perso.math.univ-toulouse.fr/motimo/files/2013/07/random-forest.pdf: Perform Random Forest  
 7. https://cran.r-project.org/web/packages/randomForest/randomForest.pdf: Perform Random Forest  
 8. https://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/ 
-   https://github.com/TZstatsADS/Spring2018-Project3-Group1/blob/master/lib/feature_HOG.R: HOG 
+   https://github.com/TZstatsADS/Fall2017-project3-grp9/blob/master/lib/hog_features.R: HOG 
 9. https://github.com/TZstatsADS/Fall2017-project3-grp8/blob/master/lib/svm/linear%20svm.Rmd: SVM
 
 
