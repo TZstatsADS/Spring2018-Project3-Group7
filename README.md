@@ -34,7 +34,8 @@ References used:
 2. https://en.wikipedia.org/wiki/AdaBoost : Perform Adaboost  
 3. http://r-statistics.co/Logistic-Regression-With-R.html : Perform Logstic  
 4. http://www.milanor.net/blog/cross-validation-for-predictive-analytics-using-r/ : CV error  
-5. https://cran.r-project.org/web/packages/gbm/gbm.pdf : Perform GBM  
+5. https://cran.r-project.org/web/packages/gbm/gbm.pdf;
+   https://github.com/TZstatsADS/Fall2017-project3-grp3: Perform GBM  
 6. https://perso.math.univ-toulouse.fr/motimo/files/2013/07/random-forest.pdf: Perform Random Forest  
 7. https://cran.r-project.org/web/packages/randomForest/randomForest.pdf: Perform Random Forest  
 8. https://www.pyimagesearch.com/2014/11/10/histogram-oriented-gradients-object-detection/ 
